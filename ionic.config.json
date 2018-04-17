@@ -1,0 +1,8 @@
+{
+  "name": "ionic3-pwa-workbox",
+  "app_id": "",
+  "type": "ionic-angular",
+  "integrations": {
+    "cordova": {}
+  }
+}
