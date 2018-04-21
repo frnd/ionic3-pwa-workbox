@@ -34,7 +34,6 @@
   },
   "devDependencies": {
     "@ionic/app-scripts": "3.1.8",
-    "ghpages": "0.0.10",
     "typescript": "~2.6.2"
   },
   "description": "An Ionic project",
