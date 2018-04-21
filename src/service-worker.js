@@ -5,27 +5,33 @@
 
 
 'use strict';
-importScripts('./build/sw-toolbox.js');
+importScripts('./build/workbox-sw.js');
 
-self.toolbox.options.cache = {
-  name: 'ionic-cache'
-};
+self.workbox.skipWaiting();
+self.workbox.clientsClaim();
 
-// pre-cache our key assets
-self.toolbox.precache(
-  [
-    './build/main.js',
-    './build/vendor.js',
-    './build/main.css',
-    './build/polyfills.js',
-    'index.html',
-    'manifest.json'
-  ]
+workbox.routing.registerRoute(
+  /\.(?:js|css|html|json)$/,
+  workbox.strategies.staleWhileRevalidate({
+    cacheName: 'ionic-cache',
+  }),
 );
 
-// dynamically cache any other local assets
-self.toolbox.router.any('/*', self.toolbox.fastest);
+/*
+  This is our code to handle push events.
+*/
+self.addEventListener('push', (event) => {
+  console.log('[Service Worker] Push Received.');
+  console.log(`[Service Worker] Push had this data: "${event.data.text()}"`);
 
-// for any other requests go to the network, cache,
-// and then only use that cached resource if your user goes offline
-self.toolbox.router.default = self.toolbox.networkFirst;
+  const title = 'Push Notification';
+  const options = {
+    body: `${event.data.text()}`,
+    icon: 'images/icon.png',
+    badge: 'images/badge.png'
+  };
+
+  event.waitUntil(self.registration.showNotification(title, options));
+});
+
+self.workbox.precaching.precacheAndRoute([]);
