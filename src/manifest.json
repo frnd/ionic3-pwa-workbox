@@ -1,6 +1,6 @@
 {
-  "name": "Ionic",
-  "short_name": "Ionic",
+  "name": "Ionic 3 PWA with Workbox",
+  "short_name": "Ionic3 PWA",
   "start_url": "index.html",
   "display": "standalone",
   "icons": [{
